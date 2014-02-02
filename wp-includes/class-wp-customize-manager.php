@@ -849,13 +849,29 @@ final class WP_Customize_Manager {
 		) );
 
 		$this->add_control( 'background_position_x', array(
-			'label'      => __( 'Background Position' ),
+			'label'      => __( 'Background Position X' ),
 			'section'    => 'background_image',
 			'type'       => 'radio',
 			'choices'    => array(
 				'left'       => __('Left'),
 				'center'     => __('Center'),
 				'right'      => __('Right'),
+			),
+		) );
+
+		$this->add_setting( 'background_position_y', array(
+			'default'        => 'top',
+			'theme_supports' => 'custom-background',
+		) );
+
+		$this->add_control( 'background_position_y', array(
+			'label'      => __( 'Background Position Y' ),
+			'section'    => 'background_image',
+			'type'       => 'radio',
+			'choices'    => array(
+				'top'       => __('Top'),
+				'middle'     => __('Middle'),
+				'bottom'      => __('Bottom'),
 			),
 		) );
 
@@ -877,7 +893,7 @@ final class WP_Customize_Manager {
 		// If the theme is using the default background callback, we can update
 		// the background CSS using postMessage.
 		if ( get_theme_support( 'custom-background', 'wp-head-callback' ) === '_custom_background_cb' ) {
-			foreach ( array( 'color', 'image', 'position_x', 'repeat', 'attachment' ) as $prop ) {
+			foreach ( array( 'color', 'image', 'position_x', 'position_y', 'repeat', 'attachment' ) as $prop ) {
 				$this->get_setting( 'background_' . $prop )->transport = 'postMessage';
 			}
 		}

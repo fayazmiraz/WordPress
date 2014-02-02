@@ -1285,10 +1285,15 @@ function _custom_background_cb() {
 			$repeat = 'repeat';
 		$repeat = " background-repeat: $repeat;";
 
-		$position = get_theme_mod( 'background_position_x', get_theme_support( 'custom-background', 'default-position-x' ) );
-		if ( ! in_array( $position, array( 'center', 'right', 'left' ) ) )
-			$position = 'left';
-		$position = " background-position: top $position;";
+		$position_x = get_theme_mod( 'background_position_x', get_theme_support( 'custom-background', 'default-position-x' ) );
+		if ( ! in_array( $position_x, array( 'center', 'right', 'left' ) ) )
+			$position_x = 'left';
+
+		$position_y = get_theme_mod( 'background_position_y', get_theme_support( 'custom-background', 'default-position-y' ) );
+		if ( ! in_array( $position_y, array( 'middle', 'bottom', 'top' ) ) )
+			$position_y = 'top';
+
+		$position = " background-position: $position_y $position_x;";
 
 		$attachment = get_theme_mod( 'background_attachment', get_theme_support( 'custom-background', 'default-attachment' ) );
 		if ( ! in_array( $attachment, array( 'fixed', 'scroll' ) ) )
@@ -1485,6 +1490,7 @@ function add_theme_support( $feature ) {
 				'default-image'          => '',
 				'default-repeat'         => 'repeat',
 				'default-position-x'     => 'left',
+				'default-position-y'     => 'top',
 				'default-attachment'     => 'scroll',
 				'default-color'          => '',
 				'wp-head-callback'       => '_custom_background_cb',

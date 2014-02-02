@@ -914,7 +914,7 @@
 		// Control visibility for default controls
 		$.each({
 			'background_image': {
-				controls: [ 'background_repeat', 'background_position_x', 'background_attachment' ],
+				controls: [ 'background_repeat', 'background_position_x', 'background_position_y', 'background_attachment' ],
 				callback: function( to ) { return !! to; }
 			},
 			'show_on_front': {

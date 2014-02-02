@@ -150,6 +150,15 @@ class Custom_Background {
 			set_theme_mod('background_position_x', $position);
 		}
 
+		if ( isset($_POST['background-position-y']) ) {
+			check_admin_referer('custom-background');
+			if ( in_array($_POST['background-position-y'], array('middle', 'bottom', 'top')) )
+				$position = $_POST['background-position-y'];
+			else
+				$position = 'top';
+			set_theme_mod('background_position_y', $position);
+		}
+
 		if ( isset($_POST['background-attachment']) ) {
 			check_admin_referer('custom-background');
 			if ( in_array($_POST['background-attachment'], array('fixed', 'scroll')) )
@@ -207,7 +216,8 @@ class Custom_Background {
 			// background-image URL must be single quote, see below
 			$background_styles .= ' background-image: url(\'' . $background_image_thumb . '\');'
 				. ' background-repeat: ' . get_theme_mod( 'background_repeat', get_theme_support( 'custom-background', 'default-repeat' ) ) . ';'
-				. ' background-position: top ' . get_theme_mod( 'background_position_x', get_theme_support( 'custom-background', 'default-position-x' ) );
+				. ' background-position: ' . get_theme_mod( 'background_position_y', get_theme_support( 'custom-background', 'default-position-y' ) ) . ' '
+				. get_theme_mod( 'background_position_x', get_theme_support( 'custom-background', 'default-position-x' ) );
 		}
 	?>
 	<div id="custom-background-image" style="<?php echo $background_styles; ?>"><?php // must be double quote, see above ?>
@@ -275,8 +285,8 @@ class Custom_Background {
 <tbody>
 <?php if ( get_background_image() ) : ?>
 <tr>
-<th scope="row"><?php _e( 'Position' ); ?></th>
-<td><fieldset><legend class="screen-reader-text"><span><?php _e( 'Background Position' ); ?></span></legend>
+<th scope="row"><?php _e( 'Position X' ); ?></th>
+<td><fieldset><legend class="screen-reader-text"><span><?php _e( 'Background Position X' ); ?></span></legend>
 <label>
 <input name="background-position-x" type="radio" value="left"<?php checked( 'left', get_theme_mod( 'background_position_x', get_theme_support( 'custom-background', 'default-position-x' ) ) ); ?> />
 <?php _e('Left') ?>
@@ -288,6 +298,23 @@ class Custom_Background {
 <label>
 <input name="background-position-x" type="radio" value="right"<?php checked( 'right', get_theme_mod( 'background_position_x', get_theme_support( 'custom-background', 'default-position-x' ) ) ); ?> />
 <?php _e('Right') ?>
+</label>
+</fieldset></td>
+</tr>
+<tr>
+<th scope="row"><?php _e( 'Position Y' ); ?></th>
+<td><fieldset><legend class="screen-reader-text"><span><?php _e( 'Background Position Y' ); ?></span></legend>
+<label>
+<input name="background-position-y" type="radio" value="top"<?php checked( 'top', get_theme_mod( 'background_position_y', get_theme_support( 'custom-background', 'default-position-y' ) ) ); ?> />
+<?php _e('Top') ?>
+</label>
+<label>
+<input name="background-position-y" type="radio" value="middle"<?php checked( 'middle', get_theme_mod( 'background_position_y', get_theme_support( 'custom-background', 'default-position-y' ) ) ); ?> />
+<?php _e('Middle') ?>
+</label>
+<label>
+<input name="background-position-y" type="radio" value="bottom"<?php checked( 'bottom', get_theme_mod( 'background_position_y', get_theme_support( 'custom-background', 'default-position-y' ) ) ); ?> />
+<?php _e('Bottom') ?>
 </label>
 </fieldset></td>
 </tr>
