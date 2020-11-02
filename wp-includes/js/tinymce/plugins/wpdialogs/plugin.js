@@ -29,13 +29,22 @@ tinymce.WPWindowManager = tinymce.InlineWindowManager = function( editor ) {
 			return;
 		}
 
+		if ( typeof jQuery === 'undefined' || ! jQuery.wp || ! jQuery.wp.wpdialog ) {
+			// wpdialog.js is not loaded.
+			if ( window.console && window.console.error ) {
+				window.console.error('wpdialog.js is not loaded. Please set "wpdialogs" as dependency for your script when calling wp_enqueue_script(). You may also want to enqueue the "wp-jquery-ui-dialog" stylesheet.');
+			}
+
+			return;
+		}
+
 		wp.$element = $element = jQuery( '#' + args.id );
 
 		if ( ! $element.length ) {
 			return;
 		}
 
-		if ( window && window.console ) {
+		if ( window.console && window.console.log ) {
 			window.console.log('tinymce.WPWindowManager is deprecated. Use the default editor.windowManager to open dialogs with inline HTML.');
 		}
 
@@ -45,7 +54,7 @@ tinymce.WPWindowManager = tinymce.InlineWindowManager = function( editor ) {
 		// Store selection. Takes a snapshot in the FocusManager of the selection before focus is moved to the dialog.
 		editor.nodeChanged();
 
-		// Create the dialog if necessary
+		// Create the dialog if necessary.
 		if ( ! $element.data('wpdialog') ) {
 			$element.wpdialog({
 				title: args.title,
@@ -76,7 +85,7 @@ tinymce.WPWindowManager = tinymce.InlineWindowManager = function( editor ) {
 };
 
 tinymce.PluginManager.add( 'wpdialogs', function( editor ) {
-	// Replace window manager
+	// Replace window manager.
 	editor.on( 'init', function() {
 		editor.windowManager = new tinymce.WPWindowManager( editor );
 	});
